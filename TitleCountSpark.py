@@ -26,7 +26,7 @@ lines = sc.textFile(sys.argv[3],1)
 #TODO
 words = lines.flatMap(lambda line: re.split(delimiters, line)) #split lines and add delimited line to counts RDD
 counts = words.filter(lambda word: word.lower() not in stopWords) \
-		.map(lambda word: (word, 1)) \
+		.map(lambda word: (word.lower(), 1)) \
 		.reduceByKey(lambda a, b: a + b)
 #swap key and val so that key is count and value is word. Then sort in descending order first
 sortedCounts = counts.map(lambda w: (w[1], w[0])) \
