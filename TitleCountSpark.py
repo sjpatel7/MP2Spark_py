@@ -29,7 +29,7 @@ counts = words.filter(lambda word: word.lower() not in stopWords) \
 		.map(lambda word: (word, 1)) \
 		.reduceByKey(lambda a, b: a + b)
 #swap key and val so that key is count and value is word. Then sort in descending order first
-counts = counts.map(lambda w: (w[1], w[0])) \
+sortedCounts = counts.map(lambda w: (w[1], w[0])) \
 		.sortByKey(ascending = False)
 
 outputFile = open(sys.argv[4],"w")
@@ -37,7 +37,7 @@ outputFile = open(sys.argv[4],"w")
 #TODO
 #write results to output file. Foramt for each line: (line +"\n")
 topTen = ""
-for word in counts.take(10):
+for word in sortedCounts.take(10):
 	topTen = word[1] + "\t" + str(word[0]) + "\n" + topTen
 outputFile.write(topTen)
 outputFile.close()
