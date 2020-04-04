@@ -28,8 +28,11 @@ output = open(sys.argv[2], "w")
 #TODO
 #write results to output file. Foramt for each line: (key + \t + value +"\n")
 N = 10
+res = ""
 for count in counts.take(N):
-  output.write(str(count[1]) + '\t' + str(count[0]) + '\n')
+  res = str(count[1]) + '\t' + str(count[0]) + '\n' + res
+
+output.write(res)
   
 output.close()
 sc.stop()
