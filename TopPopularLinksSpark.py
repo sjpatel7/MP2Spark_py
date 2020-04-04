@@ -9,16 +9,18 @@ sc = SparkContext(conf = conf)
 lines = sc.textFile(sys.argv[1], 1) 
 
 #TODO
-def getCount(line):
+def getLinks(line):
   line = line.split(':')
-  page = line[0]
   links = line[1].split(" ")
   for val in links:
     if not val.isdigit():
       links.remove(val)
-  return (len(links), page)
+  return links
 
-counts = lines.map(lambda line: getCount(line)) \
+counts = lines.flatMap(lambda line: getLinks(line)) \
+              .map(lambda link: (link, 1)) \
+              .reduceByKey(lambda a, b: a + b) \
+              .map(lambda a: (a[1], a[0])) \
               .sortByKey(ascending=False)
 
 output = open(sys.argv[2], "w")
@@ -26,8 +28,7 @@ output = open(sys.argv[2], "w")
 #TODO
 #write results to output file. Foramt for each line: (key + \t + value +"\n")
 N = 10
-topN = counts.take(N)
-for count in counts:
+for count in counts.take(N):
   output.write(str(count[1]) + '\t' + str(count[0]) + '\n')
   
 output.close()
