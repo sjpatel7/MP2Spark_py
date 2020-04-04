@@ -45,7 +45,7 @@ for word in counts.take(10):
 
 res = ""
 for word in sorted(topTen):
-	res = word + "\t" + topTen.get(word) + "\n" + res
+	res = res + word + "\t" + topTen.get(word) + "\n"
 outputFile.write(res)
 outputFile.close()
 sc.stop()
