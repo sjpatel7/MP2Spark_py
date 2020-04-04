@@ -27,19 +27,27 @@ def getVal(page):
     return (abs(page), 1) #possible orphan
   else:
     return (page, 0) #child
- 
-orphans = lines.flatMap(lambda line: getPages(line)) \
-                .map(lambda p: getVal(p)) \
-                .reduceByKey(lambda a, b: a * b) \
-                .filter(lambda p: p[1] == 1) \
-                .sortByKey(ascending = True)
+  
+def getParent(line):
+  return line.split(':')[0]
+def getChildren(line):
+  c = line.split(':')[1].split(' ')
+  for val in c:
+      if not val.isdigit():
+          c.remove(val)
+  return c
+parents = lines.map(lambda line: getParent(line)) \
+                .reduce(lambda a, b: [a] + [b]) \
+                .distinct()
+children = lines.flatMap(lambda line: getChildren(line)) \
+                .distinct()
+orphans = parents.subtract(children)
 
 output = open(sys.argv[2], "w")
 
-for orphan in orphans.collect():
-  output.write(str(orphan[0]) + "\n")
+orphans.foreach(lambda a: output.write(a + "\n"))
 #TODO
 #write results to output file. Foramt for each line: (line+"\n")
-
+output.close()
 sc.stop()
 
