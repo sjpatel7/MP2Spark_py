@@ -30,7 +30,7 @@ def getVal(page):
  
 orphans = lines.flatMap(lambda line: getPages(line)) \
                 .map(lambda p: getVal(p)) \
-                .reduceByKey(lambda a, b: a * b) \ 
+                .reduceByKey(lambda a, b: a * b) \
                 .filter(lambda p: p[1] == 1) \
                 .sortByKey(ascending = True)
 
