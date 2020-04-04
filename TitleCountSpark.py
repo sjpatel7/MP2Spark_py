@@ -12,6 +12,9 @@ delimitersPath = sys.argv[2]
 with open(stopWordsPath) as f:
 	#TODO
 	stopWords = f.readlines()
+for line in range(len(stopWords)):
+    stopWords[line] = stopWords[line].rstrip()
+stopWords.append("")
 		
 with open(delimitersPath) as f:
 	#TODO
