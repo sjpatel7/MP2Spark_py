@@ -31,8 +31,9 @@ def getVal(page):
   
 orphans = lines.flatMap(lambda line: getPages(line)) \
                 .map(lambda p: getVal(p)) \
-                .reduceByKey(lambda a, b: a * b) \ #0 if child, 1 if orphan
-                .filter(lambda p: p[1] == 1)
+                 #0 if child, 1 if orphan
+                .reduceByKey(lambda a, b: a * b) \ 
+                .filter(lambda p: p[1] == 1) \
                 .sortByKey(ascending = True)
 
 output = open(sys.argv[2], "w")
