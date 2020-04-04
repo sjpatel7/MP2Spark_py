@@ -18,7 +18,8 @@ stopWords.append("")
 		
 with open(delimitersPath) as f:
 	#TODO
-	delimiters = "[" + f.read() + "]"
+	#delimiters = "[" + f.read() + "]"
+	delimiters = "[\n\t ,;.?!\-:@[\](\){}_*/]"
 
 conf = SparkConf().setMaster("local").setAppName("TitleCount") 
 conf.set("spark.driver.bindAddress", "127.0.0.1")
