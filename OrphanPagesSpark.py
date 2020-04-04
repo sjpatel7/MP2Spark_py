@@ -12,26 +12,24 @@ lines = sc.textFile(sys.argv[1], 1)
 #TODO
 def getPages(line):
   line = line.rstrip()
-  line = line.split(":")
-  line = [int(line[0])] + list(map(int, line[1].split(" ")))
-  line[0] = -line[0]
-  return line
-
-def page_kv(line):
-  pair = line.split(": ")
-  key = int(pair[0])
-  val = list(map(int, pair[1].split(" ")))
-  return (key, val)
+  lines = line.split(":")
+  p = lines[0].strip('\t\r\n\0 ')
+  c = lines[1].strip('\t\r\n\0').split(" ")
+  for val in c:
+      if not val.isdigit():
+          c.remove(val)
+  res = [int(p)] + list(map(int, c))
+  res[0] = -res[0]
+  return res
 
 def getVal(page):
   if page < 0:
     return (abs(page), 1) #possible orphan
   else:
     return (page, 0) #child
-  
+ 
 orphans = lines.flatMap(lambda line: getPages(line)) \
                 .map(lambda p: getVal(p)) \
-                 #0 if child, 1 if orphan
                 .reduceByKey(lambda a, b: a * b) \ 
                 .filter(lambda p: p[1] == 1) \
                 .sortByKey(ascending = True)
