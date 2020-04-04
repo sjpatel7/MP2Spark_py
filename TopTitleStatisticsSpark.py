@@ -28,12 +28,12 @@ for line in topN:
   if val > max:
     max = val
 try:
-  mean = sum / len(topN)
+  mean = int(sum / len(topN))
   for line in topN:
     val = line.split("\t")[1]
     val = int(val)
     var += (val - mean) * (val - mean)
-  var = var / len(topN)
+  var = int(var / len(topN))
 except:
   print("size of TopTen is " + str(len(topN)))
   
@@ -41,7 +41,7 @@ except:
 outputFile = open(sys.argv[2],"w")
 
 #TODO write your output here
-write results to output file. Format
+#write results to output file. Format
 outputFile.write('Mean\t%s\n' % mean)
 outputFile.write('Sum\t%s\n' % sum)
 outputFile.write('Min\t%s\n' % min)
