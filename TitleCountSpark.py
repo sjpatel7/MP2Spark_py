@@ -39,12 +39,13 @@ outputFile = open(sys.argv[4],"w")
 
 #TODO
 #write results to output file. Foramt for each line: (line +"\n")
-#sortedCounts = counts.take(10).map(lambda w: (w[1], w[0])) #reswap key and value to sort top ten alphabetically
-topTen = ""
+topTen = {}
 for word in counts.take(10):
-	topTen = word[1] + "\t" + str(word[0]) + "\n" + topTen
+	topTen[word[1]] = str(word[0])
 
-	
-outputFile.write(topTen)
+res = ""
+for word in sorted(topTen):
+	res = word + "\t" + topTen.get(word) + "\n" + res
+outputFile.write(res)
 outputFile.close()
 sc.stop()
