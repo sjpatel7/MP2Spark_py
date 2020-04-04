@@ -12,7 +12,7 @@ delimitersPath = sys.argv[2]
 
 with open(stopWordsPath) as f:
 	#TODO
-	stopWords = f.readlines
+	stopWords = f.readlines()
 		
 
 with open(delimitersPath) as f:
