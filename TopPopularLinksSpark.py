@@ -29,8 +29,13 @@ output = open(sys.argv[2], "w")
 #write results to output file. Foramt for each line: (key + \t + value +"\n")
 N = 10
 res = ""
+pairs = {}
 for count in counts.take(N):
-  res = str(count[1]) + '\t' + str(count[0]) + '\n' + res
+  key = str(count[1])
+  val = str(count[0])
+  pairs[key] = val
+for key in sorted(pairs):
+  res = res + key + '\t' + pairs[key] + '\n'
 
 output.write(res)
   
