@@ -64,7 +64,7 @@ output = open(sys.argv[3], "w")
 #TODO
 #write results to output file. Foramt for each line: (key + \t + value +"\n")
 for key in sorted(ranks):
-  output.write(str(key) + '\t' + str(ranks[key]) + '\n'
+  output.write(str(key) + '\t' + str(ranks[key]) + '\n')
 output.close()
 sc.stop()
 
