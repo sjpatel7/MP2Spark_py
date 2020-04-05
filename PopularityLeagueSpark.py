@@ -41,25 +41,11 @@ pairs = leagueCounts.collect() #list of (count (int), id (str)) pairs in ascendi
 #calculate rank and then sort by id alphabetical order
 ranks = {}
 rankC = 0
-lastVal = -1
-bufferRank = 0
 for p in pairs:
   key = p[1]
   val = p[0]
-  #if initial pair
-  if lastVal == -1:
-    lastVal = val
-    ranks[key] = rankC
-    continue
-  #if lastval same as current val, buffer++ and don't change rank (assign same rank as last)
-  if lastVal == val:
-    ranks[key] = rankC
-    bufferRank += 1
-  else:
-    rankC = 1 + rankC + bufferRank
-    ranks[key] = rankC
-    lastVal = val
-    bufferRank = 0
+  ranks[key] = rankC
+  rankC += 1
 
 output = open(sys.argv[3], "w")
 #TODO
