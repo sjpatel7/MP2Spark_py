@@ -30,7 +30,7 @@ orphans = lines.flatMap(lambda line: getPages(line)) \
                 .sortByKey(ascending = True)
 output = open(sys.argv[2], "w")
 
-for orphan in orphans.collect():
+for orphan in sorted(orphans.collect()):
   output.write(str(orphan[0]) + "\n")
 #TODO
 #write results to output file. Foramt for each line: (line+"\n")
