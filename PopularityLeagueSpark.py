@@ -30,8 +30,8 @@ leagueIds = sc.textFile(sys.argv[2], 1)
 
 #TODO
 leagueIds = leagueIds.collect()
-for i in range(len(leagueIds)):
-  leagueIds[i] = leagueIds[i].split()
+#for i in range(len(leagueIds)):
+#  leagueIds[i] = leagueIds[i].split()
 leagueCounts = counts.filter(lambda p: p[0] in leagueIds) \
                       .map(lambda p: (p[1], p[0])) \
                       .sortByKey(ascending=True)
@@ -42,7 +42,7 @@ pairs = leagueCounts.collect() #list of (count (int), id (str)) pairs in ascendi
 ranks = {}
 rankC = 0
 lastVal = -1
-buffer = 0
+bufferRank = 0
 for p in pairs:
   key = p[1]
   val = p[0]
@@ -54,11 +54,12 @@ for p in pairs:
   #if lastval same as current val, buffer++ and don't change rank (assign same rank as last)
   if lastVal == val:
     ranks[key] = rankC
-    buffer += 1
+    bufferRank += 1
   else:
-    rankC += 1
-    ranks[key] = rankC + buffer
+    rankC = 1 + rankC + bufferRank
+    ranks[key] = rankC
     lastVal = val
+    bufferRank = 0
 
 output = open(sys.argv[3], "w")
 #TODO
